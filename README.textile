@@ -1,6 +1,6 @@
 h1. Xcode property from ivar
 
-This is 99.9% the very handy script from http://cocoawithlove.com/2008/12/instance-variable-to-synthesized.html . All that I've added is support for underscore naming of ivars (which will generate a synthesize with an alias) and an explicit "assign" declaration for non-pointer types (just because I like it).
+This is 99.9% the very handy script from "Cocoa with Love":http://cocoawithlove.com/2008/12/instance-variable-to-synthesized.html . All that I've added is support for underscore naming of ivars (which will generate a synthesize with an alias) and an explicit "assign" declaration for non-pointer types (just because I like it).
 
 h1. Installation Instructions
 # Open Xcode, go to Scripts menu, select Edit User Scripts
