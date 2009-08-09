@@ -124,6 +124,8 @@ on run argv
 end run
 REPLACEFILESCRIPT
 
+$headerFileContents =~ s#\s*$##;
+
 # Use Applescript to replace the contents of the header file
 # (I could have used the "Output" of the Xcode user script instead)
 system 'osascript', '-e', $replaceFileContentsScript, $headerFilePath, $headerFileContents;
@@ -186,6 +188,8 @@ if (length($implementationFileContents) && ($implementationFileContents =~ /(\@i
         		$implementationFileContents =~ s#(\@end)#\n- (void)dealloc {\n\t[$ivarName release];\n\t[super dealloc];\n}\n$1#s;
 		}
 	}
+
+	$implementationFileContents =~ s#\s*$##;
 
 	# Use Applescript to replace the contents of the implementation file in Xcode
 	system 'osascript', '-e', $replaceFileContentsScript, $implementationFilePath, $implementationFileContents;
