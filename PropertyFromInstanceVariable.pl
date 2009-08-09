@@ -48,6 +48,7 @@ my $asterisk = "";
 my $name = "";
 my $ivarName = "";
 my $behavior = "";
+my $isPointer = 0;
 
 # Test that the selection is:
 #  At series of identifiers (the type name and access specifiers)
@@ -70,10 +71,12 @@ if (length($selectedText) && ($selectedText =~ /([_A-Za-z][_A-Za-z0-9]*\s*)+([\s
 	$behavior = "";
 	if (defined($asterisk) && length($asterisk) == 1)
 	{
+		$isPointer = 1;
 		$behavior = "(nonatomic, retain) ";
 	}
 	else
 	{
+		$isPointer = 0;
 		$behavior = "(nonatomic, assign) ";
 		$asterisk = "";
 	}
@@ -177,7 +180,13 @@ if (length($implementationFileContents) && ($implementationFileContents =~ /(\@i
 		$synthesizeStatement = $leadingNewline . "\@synthesize " . $name . ";\n" . $trailingNewline;
 	}
 	substr($implementationFileContents, $indexAfterMatch, 0) = $synthesizeStatement;
-	
+
+	if ($isPointer) {
+		if ($implementationFileContents !~ s#(\(void\)\s*dealloc\s*\{\s*\n)(\s*)#$1$2\[$ivarName release\];\n$2#s) {
+        		$implementationFileContents =~ s#(\@end)#\n- (void)dealloc {\n\t[$ivarName release];\n\t[super dealloc];\n}\n$1#s;
+		}
+	}
+
 	# Use Applescript to replace the contents of the implementation file in Xcode
 	system 'osascript', '-e', $replaceFileContentsScript, $implementationFilePath, $implementationFileContents;
 }
