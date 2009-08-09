@@ -61,9 +61,12 @@ if (length($selectedText) && ($selectedText =~ /([_A-Za-z][_A-Za-z0-9]*\s*)+([\s
 	$asterisk = $2;
 	$asterisk = trim $asterisk;
 	$ivarName = $3;
-    if ($ivarName =~ /^_(.*)/) {
-        $name = $1;
-    }
+	if ($ivarName =~ /^_(.*)/) {
+		$name = $1;
+	}
+	else {
+		$name = $ivarName;
+	}
 	$behavior = "";
 	if (defined($asterisk) && length($asterisk) == 1)
 	{
@@ -166,13 +169,13 @@ if (length($implementationFileContents) && ($implementationFileContents =~ /(\@i
 	}
 
 	# Create and insert the synthesize statement 
-    my $synthesizeStatement;
-    if ($ivarName) {
-        $synthesizeStatement = $leadingNewline . "\@synthesize " . $name . " = " . $ivarName . ";\n" . $trailingNewline;
-    }
-    else {
-        $synthesizeStatement = $leadingNewline . "\@synthesize " . $name . ";\n" . $trailingNewline;
-    }
+	my $synthesizeStatement;
+	if ($ivarName ne $name) {
+		$synthesizeStatement = $leadingNewline . "\@synthesize " . $name . " = " . $ivarName . ";\n" . $trailingNewline;
+	}
+	else {
+		$synthesizeStatement = $leadingNewline . "\@synthesize " . $name . ";\n" . $trailingNewline;
+	}
 	substr($implementationFileContents, $indexAfterMatch, 0) = $synthesizeStatement;
 	
 	# Use Applescript to replace the contents of the implementation file in Xcode
