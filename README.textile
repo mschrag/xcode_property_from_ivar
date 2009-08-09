@@ -1,0 +1,20 @@
+h1. Xcode property from ivar
+This is 99.9% the very handy script from http://cocoawithlove.com/2008/12/instance-variable-to-synthesized.html . All that I've added is support for underscore naming of ivars (which will generate a synthesize with an alias) and an explicit "assign" declaration for non-pointer types (just because I like it).
+
+h1. Installation Instructions
+# Open Xcode, go to Scripts menu, select Edit User Scripts
+# Add a new shell script (I put it under the "Code" section)
+# Double-click the name to change it ("Generate Property" is what I use)
+# Double-click the cmd column to set a hotkey (cmd-shift-p is what I use -- I had to restart for this to be picked up)
+# Select "Entire Document" for Input
+# Select "Home Directory" for Directory
+# Select "Discard Output" for Output
+# Select "Display in Alert" for Errors
+# Clear out the existing script
+# Paste the contents of PropertyFromInstanceVariable.pl into the script area
+
+h1. Usage Instructions
+# Go to an ivars block and type NSString *_name; (or whatever your declaration might be)
+# Triple click the ivar line (to select the entire line)
+# Run the "Generate Property" script (cmd-shift-p, or run it from the menu)
+# Thank Matt Gallagher
