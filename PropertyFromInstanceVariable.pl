@@ -72,13 +72,13 @@ if (length($selectedText) && ($selectedText =~ /([_A-Za-z][_A-Za-z0-9]*\s*)+([\s
 	if (defined($asterisk) && length($asterisk) == 1)
 	{
 		$isPointer = 1;
-        if ($type eq "NSArray" || $type eq "NSString" || $type eq "NSDictionary" || $type eq "NSSet") {
-            $behavior = "(nonatomic, copy) ";
-        } 
-        else 
-        {
+		if ($type eq "NSArray" || $type eq "NSString" || $type eq "NSDictionary" || $type eq "NSSet") {
+			$behavior = "(nonatomic, copy) ";
+		} 
+		else 
+		{
             $behavior = "(nonatomic, retain) ";
-        }
+		}
 	}
 	else
 	{
